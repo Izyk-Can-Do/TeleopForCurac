@@ -1,0 +1,30 @@
+teleopv7_node:
+  ros__parameters:
+    robot_ip: "192.168.1.243"
+    dry_run: false
+    loop_hz: 140.0
+    velocity_watchdog_s: 0.0
+    max_linear_mm_s: 18.0
+    max_depth_mm_s: 4.0
+    tip_lock_max_angular_deg_s: 10.0
+    v7_force_watchdog_zero: true
+    v7_use_tool_z_depth_in_free: true
+    v7_ft_global_stop_enable: true
+    v7_ft_global_soft_slowdown: true
+    v7_ft_allow_retreat_on_limit: true
+    v7_ft_retreat_speed_scale: 0.45
+    v7_ft_retreat_min_cos: 0.08
+    ft_fx_limit_n: 30.0
+    ft_fy_limit_n: 30.0
+    ft_fz_limit_n: 30.0
+    ft_force_norm_limit_n: 90.0
+    v7_ft_haptic_enable: true
+    v7_ft_haptic_force_source: insertion_axis
+    v7_ft_haptic_full_scale_n: 70.0
+    v7_ft_haptic_force_alpha: 0.08
+    v7_ft_haptic_deadband_n: 1.2
+    v7_ft_haptic_shape_exp: 1.40
+    v7_ft_haptic_smooth_alpha: 0.20
+    v7_ft_haptic_max_trigger_resistance: 0.75
+    v7_ft_haptic_rumble_enable: false
+    v7_motion_haptic_enable: false
