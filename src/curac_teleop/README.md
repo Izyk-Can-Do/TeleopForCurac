@@ -72,31 +72,38 @@ Optional, only for GUI:
 
 ## One-Time Setup
 
-### 1) Go to workspace
+### 1) Create and open a workspace (portable)
 
 ```bash
-cd /home/islam/Desktop/CURACTELEOP
+mkdir -p ~/CURACTELEOP
+cd ~/CURACTELEOP
 ```
 
-### 2) Source ROS2
+### 2) Clone repository
+
+```bash
+git clone https://github.com/Izyk-Can-Do/TeleopForCurac.git .
+```
+
+### 3) Source ROS2
 
 ```bash
 source /opt/ros/humble/setup.bash
 ```
 
-### 3) Build
+### 4) Build
 
 ```bash
 colcon build --symlink-install
 ```
 
-### 4) Source local install
+### 5) Source local install
 
 ```bash
 source install/setup.bash
 ```
 
-### 5) Install system package for KDL (important)
+### 6) Install system package for KDL (important)
 
 ```bash
 sudo apt update
@@ -107,7 +114,7 @@ sudo apt install -y python3-pykdl
 
 ## Launch Modes
 
-## 1) Main Teleop only (recommended first test)
+### 1) Main Teleop only (recommended first test)
 
 ```bash
 ros2 launch curac_teleop teleopv7.launch.py
@@ -115,13 +122,13 @@ ros2 launch curac_teleop teleopv7.launch.py
 
 This starts only `teleopv7_node` with default config file.
 
-## 2) Full stack (teleop + FT bridge + RViz bridge + GUI)
+### 2) Full stack (teleop + FT bridge + RViz bridge + GUI)
 
 ```bash
 ros2 launch curac_teleop teleopv7_with_gui.launch.py
 ```
 
-## 3) Bridge-only mode (for diagnostics, RViz, or external tools)
+### 3) Bridge-only mode (for diagnostics, RViz, or external tools)
 
 ```bash
 ros2 launch curac_teleop bridge_only.launch.py
@@ -134,13 +141,13 @@ ros2 launch curac_teleop bridge_only.launch.py
 ### TeleopV7 with default profile
 
 ```bash
-ros2 run curac_teleop teleopv7_node --ros-args --params-file /home/islam/Desktop/CURACTELEOP/src/curac_teleop/config/teleopv7_default.yaml
+ros2 run curac_teleop teleopv7_node --ros-args --params-file src/curac_teleop/config/teleopv7_default.yaml
 ```
 
 ### TeleopV7 with drilling profile
 
 ```bash
-ros2 run curac_teleop teleopv7_node --ros-args --params-file /home/islam/Desktop/CURACTELEOP/src/curac_teleop/config/teleopv7_drilling.yaml
+ros2 run curac_teleop teleopv7_node --ros-args --params-file src/curac_teleop/config/teleopv7_drilling.yaml
 ```
 
 ---
@@ -220,27 +227,27 @@ If it says `no`, haptics will be limited or disabled.
 
 ## Common Problems and Fixes
 
-## Problem: `DistributionNotFound` at launch
+### Problem: `DistributionNotFound` at launch
 
 Cause: package metadata requiring modules not installed in your environment.
 
 Fix:
 - Rebuild after dependency update:
 ```bash
-cd /home/islam/Desktop/CURACTELEOP
+cd ~/CURACTELEOP
 source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-## Problem: `PyKDL` import error
+### Problem: `PyKDL` import error
 
 Fix:
 ```bash
 sudo apt install -y python3-pykdl
 ```
 
-## Problem: Controller connected but no adaptive trigger feedback
+### Problem: Controller connected but no adaptive trigger feedback
 
 Checks:
 - udev rule exists and loaded.
@@ -248,7 +255,7 @@ Checks:
 - startup logs show DualSense bound device and write status.
 - `v7_ft_haptic_enable` is true.
 
-## Problem: Robot blocks completely on force limit
+### Problem: Robot blocks completely on force limit
 
 Enable retreat mode:
 - `v7_ft_allow_retreat_on_limit:=true`
