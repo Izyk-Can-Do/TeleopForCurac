@@ -164,6 +164,65 @@ If behavior feels opposite to your setup, do not hardcode immediately; prefer pa
 
 ---
 
+## PS5 Controller Command Guidance
+
+This section explains exactly what each relevant PS5 control does in this project.
+
+### Trigger and stick behavior
+
+- `R1 (Deadman)`: must be held for movement commands to be applied.
+- `Left Stick Up/Down`: planar forward/back command (operator perspective).
+- `Left Stick Left/Right`: planar left/right command (operator perspective).
+- `L2 / R2`: depth command. In current project logic, depth is computed from `L2 - R2` and then mapped through insertion settings.
+
+### Face buttons (main actions)
+
+- `Cross (X)`:
+  - In `FREE_TELEOP`: starts fixed-tip capture sequence (enters tip-lock).
+  - In `TIP_LOCK_ACTIVE`: exits fixed-tip mode and returns to free teleop.
+- `Circle (O)`:
+  - In `FREE_TELEOP`: entry-lock capture request (only if `v7_enable_rcm_placeholder:=true`).
+  - In `ENTRY_LOCK_ACTIVE`: unlocks entry-lock and returns to free teleop.
+- `Square`:
+  - FT sensor tare (zero) action.
+- `Triangle`:
+  - starts orthogonal alignment action.
+
+### Shoulder and system buttons
+
+- `L1`:
+  - move-to-initial-pose action (if `enable_initial_pose_action:=true`).
+- `Create` (PS5 equivalent of back):
+  - mapped to back/recovery channel. Depending on `enable_back_quit`, it can trigger recovery/quit behavior from base teleop logic.
+
+### PS5 mapping used by the input layer
+
+Internal mapping in `teleopv5/input_layer.py`:
+- `btn_cross -> btn_a`
+- `btn_circle -> btn_b`
+- `btn_square -> btn_x`
+- `btn_triangle -> btn_y`
+- `btn_l1 -> btn_lb`
+- `btn_r1 -> btn_rb`
+- `btn_create -> btn_back`
+
+### Practical usage flow (recommended)
+
+1. Hold `R1`.
+2. Use left stick for XY motion.
+3. Use `L2/R2` for depth along tool axis behavior.
+4. Press `Cross` to enter/exit fixed-tip mode.
+5. Press `Square` whenever you need FT re-zero.
+6. Press `L1` only when you intentionally want return-to-initial-pose.
+
+### Important notes
+
+- Mode buttons (`Cross`, `Circle`) are edge-triggered and debounced; hold does not repeatedly toggle.
+- If entry-lock does not engage, check `v7_enable_rcm_placeholder` parameter.
+- If movement is blocked during force contact, check FT guard parameters and retreat-on-limit settings.
+
+---
+
 ## Safety Behavior (Current Defaults)
 
 The default profile is tuned for safe, practical operation:
